@@ -24,21 +24,16 @@ namespace RSclient
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void fmMain_Load(object sender, EventArgs e)
         {
             clientThreads.Add(new Thread(new ParameterizedThreadStart(new Worker().doWork)));
             for (int i = 0; i < clientThreads.Count; i++)
             {
-                ThreadParams tp = new ThreadParams("tRaider", "SNmLwpNm", mainData);
+                ThreadParams tp = new ThreadParams("traider2", "SNmLwpLn", mainData);
                 clientThreads[i].Name = @"Worker: %username%";
                 clientThreads[i].Start(tp);
                 clientThreads[i].IsBackground = true;
             }
-        }
-
-        private void fmMain_Load(object sender, EventArgs e)
-        {
-            
         }
 
         

@@ -63,7 +63,7 @@
     <Compile Include="Classes\Command.cs" />
     <Compile Include="Classes\CommandReader.cs" />
     <Compile Include="Classes\Config.cs" />
-    <Compile Include="Loader.cs" />
+    <Compile Include="Classes\Loader.cs" />
     <Compile Include="Receiver.cs" />
     <Compile Include="Structs\Item_structs\Consumable\Consumable.cs" />
     <Compile Include="Structs\Item_structs\Device.cs" />

@@ -39,7 +39,7 @@ namespace RSclient
                 }
                 recvBuffers.Add(new ArraySegment<byte>(bigBuffer));
             }
-            handler.Receive(recvBuffers);
+            if (len != 0) { handler.Receive(recvBuffers); }
             byte[] data = ConvertToByteArray(recvBuffers);
             Command cmd = new Command(com, data);
             cmd.controlCRC = controlCRC;

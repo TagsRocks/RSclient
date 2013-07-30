@@ -37,17 +37,18 @@ namespace RSclient
                         case Command.CList.PasswordUser:
                             {
                                 user.serverTime = cmdReader.GetIntValue();
+                                user.isPassword = true;
                                 break;
                             }
                         case Command.CList.FailLogin:
                             {
-                                user.isLogin = false;
+                                user.error = User.ErrorList.Password;
                                 isWork = false;
                                 break;
                             }
                         case Command.CList.FailVersion:
                             {
-                                user.isLogin = false;
+                                user.error = User.ErrorList.Protocol;
                                 isWork = false;
                                 break;
                             }
@@ -55,22 +56,34 @@ namespace RSclient
                             {
                                 Loader loader = new Loader();
                                 mainData.domains = loader.getDomains(cmdReader);
+                                mainData.isDomains = true;
                                 break;
                             }
                         case Command.CList.getNebulas:
                             {
+                                Loader loader = new Loader();
+                                mainData.nebulas = loader.getNebulas(cmdReader);
+                                mainData.isNebulas = true;
                                 break;
                             }
                         case Command.CList.getLocations:
                             {
+                                Loader loader = new Loader();
+                                mainData.locations = loader.getLocations(cmdReader, mainData);
+                                mainData.isLocations = true;
                                 break;
                             }
                         case Command.CList.getPlanets:
                             {
+                                Loader loader = new Loader();
+                                mainData.planets = loader.getPlanets(cmdReader, mainData);
                                 break;
                             }
                         case Command.CList.getItems:
                             {
+                                Loader loader = new Loader();
+                                mainData.itemCollect = loader.getItems(cmdReader, mainData);
+                                mainData.isItems = true;
                                 break;
                             }
                     }

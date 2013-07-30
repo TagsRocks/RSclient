@@ -12,6 +12,8 @@ namespace RSclient
 {
     public class User : INotifyPropertyChanged
     {
+        public delegate void UserEventHandler(object sender, EventArgs e);
+
         public enum TargetType : int
         {
             none = 0,
@@ -26,11 +28,20 @@ namespace RSclient
             attack = 1,
             repair = 2,
         }
+        public enum ErrorList : byte
+        {
+            None,
+            Connect,
+            Protocol, 
+            Password
+        }
 
         private int _id;
         private string _login;
         private string _pilotName;
         private string _shipName;
+        private bool _isLogin;
+        private bool _isPassword;
 
         public string password;
         public Socket handler;
@@ -50,8 +61,45 @@ namespace RSclient
         public bool loadComplete = false;
         public double gcd;
         public int serverTime = 0;
-        public bool isLogin = false;
+        public ErrorList error;
+        
         #region ObservableObjects
+        public bool isPassword
+        {
+            get
+            {
+                return _isPassword;
+            }
+            set
+            {
+                if (value != _isPassword)
+                {
+                    _isPassword = value;
+                    if (_isPassword)
+                    {
+                        OnIsPasswordCompliteEvent();
+                    }
+                }
+            }
+        }
+        public bool isLogin
+        {
+            get
+            {
+                return _isLogin;
+            }
+            set
+            {
+                if (value != _isLogin)
+                {
+                    _isLogin = value;
+                    if (_isLogin)
+                    {
+                        OnIsLoginCompliteEvent();
+                    }
+                }
+            }
+        }
         public string login
         {
             get
@@ -113,6 +161,20 @@ namespace RSclient
             }
         }
         #endregion
+
+        public event UserEventHandler isLoginComplite;
+        protected virtual void OnIsLoginCompliteEvent()
+        {
+            if (isLoginComplite != null)
+                isLoginComplite(this, EventArgs.Empty);
+        }
+        public event UserEventHandler isPasswordComplite;
+        protected virtual void OnIsPasswordCompliteEvent()
+        {
+            if (isPasswordComplite != null)
+                isPasswordComplite(this, EventArgs.Empty);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string p_propertyName)
         {
