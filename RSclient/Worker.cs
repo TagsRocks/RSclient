@@ -14,7 +14,6 @@ namespace RSclient
         Client client = new Client();
         User user = new User();
         MainData mainData = null;
-        bool Work = false;
 
         public void doWork(object param)
         {

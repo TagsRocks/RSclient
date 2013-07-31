@@ -21,6 +21,11 @@ namespace RSclient
                 dom.description = cr.GetStringValue();
                 dom.x = cr.GetIntValue();
                 dom.y = cr.GetIntValue();
+                int enemyCount = cr.GetIntValue();
+                for (int j = 0; j < enemyCount; j++)
+                {
+                    dom.enemy.Add(cr.GetIntValue());
+                }
                 res.Add(dom.id, dom);
             }
             return res;
