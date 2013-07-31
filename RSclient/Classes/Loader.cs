@@ -18,7 +18,7 @@ namespace RSclient
                 Domain dom = new Domain();
                 dom.id = cr.GetIntValue();
                 dom.color = cr.GetIntValue();
-                dom.description = cr.GetStringValue(cr.GetIntValue());
+                dom.description = cr.GetStringValue();
                 dom.x = cr.GetIntValue();
                 dom.y = cr.GetIntValue();
                 res.Add(dom.id, dom);
@@ -50,7 +50,7 @@ namespace RSclient
             {
                 Location loc = new Location();
                 loc.id = cr.GetIntValue();
-                loc.starName = cr.GetStringValue(cr.GetIntValue());
+                loc.starName = cr.GetStringValue();
                 loc.starType = cr.GetIntValue();
                 loc.x = cr.GetIntValue();
                 loc.y = cr.GetIntValue();
@@ -64,13 +64,14 @@ namespace RSclient
         {
             Dictionary<int, Planet> res = mainData.planets;
             Location parentLocation = mainData.locations[cr.GetIntValue()];
+            parentLocation.planets = new Dictionary<int, Planet>();
             int planetsCount = cr.GetIntValue();
             for (int i = 0; i < planetsCount; i++)
             {
                 Planet pln = new Planet();
                 pln.parent = parentLocation;
                 pln.id = cr.GetIntValue();
-                pln.planetName = cr.GetStringValue(cr.GetIntValue());
+                pln.planetName = cr.GetStringValue();
                 pln.planetType = cr.GetIntValue();
                 pln.r_speed = cr.GetIntValue();
                 pln.orbit = cr.GetIntValue();
@@ -97,7 +98,7 @@ namespace RSclient
                 {
                     int item_id = cr.GetIntValue();
                     Item.ItemType item_itemType = (Item.ItemType)cr.GetIntValue();
-                    String item_description = cr.GetStringValue(cr.GetIntValue());
+                    String item_description = cr.GetStringValue();
                     int item_volume = cr.GetIntValue();
                     int item_region_id = cr.GetIntValue();
                     int item_packing = cr.GetIntValue();
@@ -119,7 +120,7 @@ namespace RSclient
                             }
                         case Item.ItemType.device:
                             {
-                                String device_vendorStr = cr.GetStringValue(cr.GetIntValue());
+                                String device_vendorStr = cr.GetStringValue();
                                 Device.DeviceType device_deviceType = (Device.DeviceType)cr.GetIntValue();
                                 int device_durability = cr.GetIntValue();
                                 switch (device_deviceType)
@@ -309,6 +310,124 @@ namespace RSclient
                     }
                 }
             }
+            return res;
+        }
+        public Dictionary<int, Equip> getEquips(CommandReader cr, MainData mainData)
+        {
+            Dictionary<int, Equip> res = new Dictionary<int, Equip>();
+            int equipCount = cr.GetIntValue();
+            for (int i = 0; i < equipCount; i++)
+            {
+                Equip eq = new Equip();
+                eq.id = cr.GetIntValue();
+                int item_id = cr.GetIntValue();
+                Item.ItemType iType = (Item.ItemType)cr.GetIntValue();
+                int dType = cr.GetIntValue();
+                eq.in_use = cr.GetIntValue()==0 ? false: true;
+                eq.wear = cr.GetIntValue();
+                int location  = cr.GetIntValue();
+                eq.location = location == 0 ? null : mainData.planets[location];
+                eq.num = cr.GetIntValue();
+                switch (iType)
+                {
+                    case Item.ItemType.consumable:
+                        {
+                            Consumable item = mainData.itemCollect.get<Consumable>(item_id);
+                            eq.item = item;
+                            break;
+                        }
+                    case Item.ItemType.device:
+                        {
+                            Device.DeviceType devT = (Device.DeviceType)dType;
+                            switch (devT)
+                            {
+                                case Device.DeviceType.Body:
+                                    {
+                                        Body item = mainData.itemCollect.get<Body>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                                case Device.DeviceType.Droid:
+                                    {
+                                        Droid item = mainData.itemCollect.get<Droid>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                                case Device.DeviceType.Engine:
+                                    {
+                                        Engine item = mainData.itemCollect.get<Engine>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                                case Device.DeviceType.Fuelbag:
+                                    {
+                                        Fuelbag item = mainData.itemCollect.get<Fuelbag>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                                case Device.DeviceType.Hyper:
+                                    {
+                                        Hyper item = mainData.itemCollect.get<Hyper>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                                case Device.DeviceType.Radar:
+                                    {
+                                        Radar item = mainData.itemCollect.get<Radar>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                                case Device.DeviceType.Shield:
+                                    {
+                                        Shield item = mainData.itemCollect.get<Shield>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                                case Device.DeviceType.Weapon:
+                                    {
+                                        Weapon item = mainData.itemCollect.get<Weapon>(item_id);
+                                        eq.item = item;
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                }
+                res.Add(eq.id, eq);
+            }
+            return res;
+        }
+        public User getUserData(CommandReader cr, MainData mainData, User user)
+        {
+            User res = user;
+            res.id = cr.GetIntValue();
+            res.x = cr.GetIntValue();
+            res.y = cr.GetIntValue();
+            res.domain = mainData.domains[cr.GetIntValue()];
+            int inPlanet = cr.GetIntValue();
+            if (inPlanet == 0) { res.inPlanet = null; }
+            else { res.inPlanet = mainData.planets[inPlanet]; }
+            res.pilotName = cr.GetStringValue();
+            res.shipName = cr.GetStringValue();
+            res.equips = getEquips(cr, mainData);
+            return res;
+        }
+        public User getAddUser(CommandReader cr, MainData mainData)
+        {
+            User res = new User();
+            res.id = cr.GetIntValue();
+            res.shipName = cr.GetStringValue();
+            res.x = cr.GetIntValue();
+            res.y = cr.GetIntValue();
+            res.targetX = cr.GetIntValue();
+            res.targetY = cr.GetIntValue();
+            res.domain = mainData.domains[cr.GetIntValue()];
+            res.equips = getEquips(cr, mainData);
+            return res;
+        }
+        public int getRemoveUser(CommandReader cr)
+        {
+            int res = cr.GetIntValue();
             return res;
         }
     }

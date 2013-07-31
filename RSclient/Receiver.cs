@@ -31,13 +31,12 @@ namespace RSclient
                     {
                         case Command.CList.LoginUser:
                             {
-                                user.isLogin = true;
+                                user.serverTime = cmdReader.GetIntValue();
+                                user.isPassword = true;
                                 break;
                             }
                         case Command.CList.PasswordUser:
                             {
-                                user.serverTime = cmdReader.GetIntValue();
-                                user.isPassword = true;
                                 break;
                             }
                         case Command.CList.FailLogin:
@@ -57,6 +56,7 @@ namespace RSclient
                                 Loader loader = new Loader();
                                 mainData.domains = loader.getDomains(cmdReader);
                                 mainData.isDomains = true;
+                                mainData.loadingDomains = false;
                                 break;
                             }
                         case Command.CList.getNebulas:
@@ -64,6 +64,7 @@ namespace RSclient
                                 Loader loader = new Loader();
                                 mainData.nebulas = loader.getNebulas(cmdReader);
                                 mainData.isNebulas = true;
+                                mainData.loadingNebulas = false;
                                 break;
                             }
                         case Command.CList.getLocations:
@@ -71,12 +72,14 @@ namespace RSclient
                                 Loader loader = new Loader();
                                 mainData.locations = loader.getLocations(cmdReader, mainData);
                                 mainData.isLocations = true;
+                                mainData.loadingLocations = false;
                                 break;
                             }
                         case Command.CList.getPlanets:
                             {
                                 Loader loader = new Loader();
                                 mainData.planets = loader.getPlanets(cmdReader, mainData);
+                                mainData.loadingPlanets = false;
                                 break;
                             }
                         case Command.CList.getItems:
@@ -84,6 +87,32 @@ namespace RSclient
                                 Loader loader = new Loader();
                                 mainData.itemCollect = loader.getItems(cmdReader, mainData);
                                 mainData.isItems = true;
+                                mainData.loadingItems = false;
+                                break;
+                            }
+                        case Command.CList.getPlayerData:
+                            {
+                                Loader loader = new Loader();
+                                user = loader.getUserData(cmdReader, mainData, user);
+                                user.isLoadComplite = true;
+                                break;
+                            }
+                        case Command.CList.addUser:
+                            {
+                                Loader loader = new Loader();
+                                User userAdd = loader.getAddUser(cmdReader, mainData);
+                                user.usersClose.Add(userAdd.id, userAdd);
+                                break;
+                            }
+                        case Command.CList.removeUser:
+                            {
+                                Loader loader = new Loader();
+                                user.usersClose.Remove(loader.getRemoveUser(cmdReader));
+                                break;
+                            }
+                        case Command.CList.Disconnect:
+                            {
+                                isWork = false;
                                 break;
                             }
                     }

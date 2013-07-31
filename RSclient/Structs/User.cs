@@ -40,8 +40,9 @@ namespace RSclient
         private string _login;
         private string _pilotName;
         private string _shipName;
-        private bool _isLogin;
-        private bool _isPassword;
+        private bool _isLogin = false;
+        private bool _isPassword = false;
+        private bool _loadComplite = false;
 
         public string password;
         public Socket handler;
@@ -54,11 +55,10 @@ namespace RSclient
         public Planet inPlanet = new Planet();
         public Dictionary<int, Equip> equips = new Dictionary<int, Equip>();
         public int protocolVersion;
-        public List<User> usersClose = new List<User>();
+        public Dictionary<int, User> usersClose = new Dictionary<int, User>();
         public TargetType targetType;
         public int target;
         public UserShip userShip = new UserShip();
-        public bool loadComplete = false;
         public double gcd;
         public int serverTime = 0;
         public ErrorList error;
@@ -96,6 +96,24 @@ namespace RSclient
                     if (_isLogin)
                     {
                         OnIsLoginCompliteEvent();
+                    }
+                }
+            }
+        }
+        public bool isLoadComplite
+        {
+            get
+            {
+                return _loadComplite;
+            }
+            set
+            {
+                if (value != _loadComplite)
+                {
+                    _loadComplite = value;
+                    if (_loadComplite)
+                    {
+                        OnIsLoadCompliteEvent();
                     }
                 }
             }
@@ -174,7 +192,12 @@ namespace RSclient
             if (isPasswordComplite != null)
                 isPasswordComplite(this, EventArgs.Empty);
         }
-
+        public event UserEventHandler isLoadingComplite;
+        protected virtual void OnIsLoadCompliteEvent()
+        {
+            if (isLoadingComplite != null)
+                isLoadingComplite(this, EventArgs.Empty);
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string p_propertyName)
         {

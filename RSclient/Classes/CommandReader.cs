@@ -55,9 +55,10 @@ namespace RSclient
             Res = byteArrayToInt(Arr);
             return Res;
         }
-        public String GetStringValue(int SL)
+        public String GetStringValue()
         {
             String Res = "";
+            int SL = GetIntValue();
             byte[] Arr = new byte[SL];
             Array.Copy(this.data, this.address, Arr, 0, SL);
             this.delta(SL);

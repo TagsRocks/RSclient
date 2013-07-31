@@ -14,6 +14,7 @@ namespace RSclient
         Client client = new Client();
         User user = new User();
         MainData mainData = null;
+        bool Work = false;
 
         public void doWork(object param)
         {
@@ -32,26 +33,50 @@ namespace RSclient
                 user.isLogin = false;
                 user.isLoginComplite += user_isLoginComplite;
                 user.isPasswordComplite += user_isPasswordComplite;
+                mainData.isDomainsLoad += mainData_isDomainsLoad;
+                mainData.isLocationsLoad += mainData_isLocationsLoad;
+                mainData.isNebulasLoad += mainData_isNebulasLoad;
+                mainData.isPlanetsLoad += mainData_isPlanetsLoad;
+                mainData.isItemsLoad += mainData_isItemsLoad;
+                user.isLoadingComplite += user_isLoadingComplite;
                 client.sendLogin(user.login, user.handler);
+                user.isLogin = true;
                 Thread receiver = new Thread(new ParameterizedThreadStart(new Receiver().doWork));
                 ReceiverParams rp = new ReceiverParams(user, mainData);
                 receiver.Name = @"Receiver: " + user.login;
                 receiver.Start(rp);
                 receiver.IsBackground = true;
-                
-                while (true) { }
+                receiver.Join();
+                bool state = receiver.IsAlive;
+            }
+        }
+
+        void user_isLoadingComplite(object sender, EventArgs e)
+        {
+            client.sendCommand(new Command(Command.CList.loadComplite), user.handler);
+            user.updateUserShip();
+        }
+
+        void mainData_isItemsLoad(object sender, EventArgs e)
+        {
+            client.sendCommand(new Command(Command.CList.getPlayerData), user.handler);
+        }
+
+        void mainData_isPlanetsLoad(object sender, EventArgs e)
+        {
+            if (!mainData.isLoaded&&!mainData.isItems&&!mainData.loadingItems)
+            {
+                mainData.loadingItems = true;
+                client.sendCommand(new Command(Command.CList.getItems), user.handler);
             }
         }
 
         void user_isPasswordComplite(object sender, EventArgs e)
         {
-            if (!mainData.isLoaded)
+            if (!mainData.isLoaded && !mainData.isDomains && !mainData.loadingDomains)
             {
-                if (!mainData.isDomains)
-                {
-                    mainData.isDomainsLoad += mainData_isDomainsLoad;
-                    client.sendCommand(new Command(Command.CList.getDomains), user.handler);
-                }
+                mainData.loadingDomains = true;
+                client.sendCommand(new Command(Command.CList.getDomains), user.handler);
             }
         }
 
@@ -62,49 +87,35 @@ namespace RSclient
 
         private void mainData_isDomainsLoad(object sender, EventArgs e)
         {
-            if (!mainData.isLoaded)
+            if (!mainData.isLoaded && !mainData.isLocations&&!mainData.loadingLocations)
             {
-                if (!mainData.isLocations)
-                {
-                    mainData.isLocationsLoad += mainData_isLocationsLoad;
-                    client.sendCommand(new Command(Command.CList.getLocations), user.handler);
-                }
+                mainData.loadingLocations = true;
+                client.sendCommand(new Command(Command.CList.getLocations), user.handler);
             }
         }
 
         private void mainData_isLocationsLoad(object sender, EventArgs e)
         {
-            if (!mainData.isLoaded)
+            if (!mainData.isLoaded && !mainData.isNebulas&&!mainData.loadingNebulas)
             {
-                if (!mainData.isNebulas)
-                {
-                    mainData.isNebulasLoad += mainData_isNebulasLoad;
-                    client.sendCommand(new Command(Command.CList.getNebulas), user.handler);
-                    client.sendCommand(new Command(Command.CList.getItems), user.handler);
-                }
+                mainData.loadingNebulas = true;
+                client.sendCommand(new Command(Command.CList.getNebulas), user.handler);
             }
         }
 
         private void mainData_isNebulasLoad(object sender, EventArgs e)
         {
-            if (!mainData.isLoaded)
+            if (!mainData.isLoaded && !mainData.isPlanets&&!mainData.loadingPlanets)
             {
-                if (!mainData.isPlanets)
+                mainData.loadingPlanets = true;
+                for (int i = 0; i < mainData.locations.Count; i++)
                 {
-                    for (int i = 0; i < mainData.locations.Count; i++)
-                    {
-                        List<byte> rawData = new List<byte>();
-                        rawData.AddRange(client.intToByteArray(mainData.locations[i].id));
-                        client.sendCommand(new Command(Command.CList.getPlanets, rawData.ToArray()), user.handler);
-                    }
-                    mainData.isPlanets = true;
+                    List<byte> rawData = new List<byte>();
+                    rawData.AddRange(client.intToByteArray(mainData.locations.ElementAt(i).Value.id));
+                    client.sendCommand(new Command(Command.CList.getPlanets, rawData.ToArray()), user.handler);
                 }
+                mainData.isPlanets = true;
             }
-        }
-
-        private void mainData_isItemsLoad(object sender, EventArgs e)
-        {
-            client.sendCommand(new Command(Command.CList.getPlayerData), user.handler);
         }
     }
 }

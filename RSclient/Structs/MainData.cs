@@ -15,13 +15,18 @@ namespace RSclient
         public Dictionary<int, Nebula> nebulas = new Dictionary<int,Nebula>();
         public Dictionary<int, Planet> planets = new Dictionary<int,Planet>();
         public ItemCollection itemCollect = new ItemCollection();
-        private bool _isDomains;
-        private bool _isLocations;
-        private bool _isPlanets;
-        private bool _isNebulas;
-        private bool _isItems;
-        
-        public bool isLoaded;
+        private bool _isDomains = false;
+        private bool _isLocations = false;
+        private bool _isPlanets = false;
+        private bool _isNebulas = false;
+        private bool _isItems = false;
+        public bool loadingDomains = false;
+        public bool loadingLocations = false;
+        public bool loadingPlanets = false;
+        public bool loadingNebulas = false;
+        public bool loadingItems = false;
+        public bool isLoaded = false;
+
         public bool isDomains
         {
             get
