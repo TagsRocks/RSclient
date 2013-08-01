@@ -19,7 +19,7 @@ namespace RSclient
 
         public void start()
         {
-            int i = 0;
+            
         }
     }
 }

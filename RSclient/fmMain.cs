@@ -27,10 +27,10 @@ namespace RSclient
 
         private void fmMain_Load(object sender, EventArgs e)
         {
+            //clientThreads.Add(new Thread(new ParameterizedThreadStart(new Worker().doWork)));
+            //tps.Add(new ThreadParams("test1", "test", mainData));
             clientThreads.Add(new Thread(new ParameterizedThreadStart(new Worker().doWork)));
             tps.Add(new ThreadParams("traider2", "SNmLwpLn", mainData));
-            clientThreads.Add(new Thread(new ParameterizedThreadStart(new Worker().doWork)));
-            tps.Add(new ThreadParams("traider", "SNmLwpLn", mainData));
             
             for (int i = 0; i < clientThreads.Count; i++)
             {

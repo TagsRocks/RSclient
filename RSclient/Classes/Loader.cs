@@ -12,19 +12,19 @@ namespace RSclient
         public Dictionary<int, Domain> getDomains(CommandReader cr)
         {
             Dictionary<int, Domain> res = new Dictionary<int,Domain>();
-            int domainCount = cr.GetIntValue();
+            int domainCount = cr.getInt();
             for (int i = 0; i < domainCount; i++)
             {
                 Domain dom = new Domain();
-                dom.id = cr.GetIntValue();
-                dom.color = cr.GetIntValue();
-                dom.description = cr.GetStringValue();
-                dom.x = cr.GetIntValue();
-                dom.y = cr.GetIntValue();
-                int enemyCount = cr.GetIntValue();
+                dom.id = cr.getInt();
+                dom.color = cr.getInt();
+                dom.description = cr.getStr();
+                dom.x = cr.getInt();
+                dom.y = cr.getInt();
+                int enemyCount = cr.getInt();
                 for (int j = 0; j < enemyCount; j++)
                 {
-                    dom.enemy.Add(cr.GetIntValue());
+                    dom.enemy.Add(cr.getInt());
                 }
                 res.Add(dom.id, dom);
             }
@@ -33,16 +33,16 @@ namespace RSclient
         public Dictionary<int, Nebula> getNebulas(CommandReader cr)
         {
             Dictionary<int, Nebula> res = new Dictionary<int, Nebula>();
-            int nebulasCount = cr.GetIntValue();
+            int nebulasCount = cr.getInt();
             for (int i = 0; i < nebulasCount; i++)
             {
                 Nebula neb = new Nebula();
-                neb.id = cr.GetIntValue();
-                neb.type = cr.GetIntValue();
-                neb.x = cr.GetIntValue();
-                neb.y = cr.GetIntValue();
-                neb.scale = cr.GetIntValue();
-                neb.angle = cr.GetIntValue();
+                neb.id = cr.getInt();
+                neb.type = cr.getInt();
+                neb.x = cr.getInt();
+                neb.y = cr.getInt();
+                neb.scale = cr.getInt();
+                neb.angle = cr.getInt();
                 res.Add(neb.id, neb);
             }
             return res;
@@ -50,17 +50,17 @@ namespace RSclient
         public Dictionary<int, Location> getLocations(CommandReader cr, MainData mainData)
         {
             Dictionary<int, Location> res = new Dictionary<int, Location>();
-            int locationCount = cr.GetIntValue();
+            int locationCount = cr.getInt();
             for (int i = 0; i < locationCount; i++)
             {
                 Location loc = new Location();
-                loc.id = cr.GetIntValue();
-                loc.starName = cr.GetStringValue();
-                loc.starType = cr.GetIntValue();
-                loc.x = cr.GetIntValue();
-                loc.y = cr.GetIntValue();
-                loc.radius = cr.GetIntValue();
-                loc.domain = mainData.domains[cr.GetIntValue()];
+                loc.id = cr.getInt();
+                loc.starName = cr.getStr();
+                loc.starType = cr.getInt();
+                loc.x = cr.getInt();
+                loc.y = cr.getInt();
+                loc.radius = cr.getInt();
+                loc.domain = mainData.domains[cr.getInt()];
                 res.Add(loc.id, loc);
             }
             return res;
@@ -68,25 +68,25 @@ namespace RSclient
         public Dictionary<int, Planet> getPlanets(CommandReader cr, MainData mainData)
         {
             Dictionary<int, Planet> res = mainData.planets;
-            Location parentLocation = mainData.locations[cr.GetIntValue()];
+            Location parentLocation = mainData.locations[cr.getInt()];
             parentLocation.planets = new Dictionary<int, Planet>();
-            int planetsCount = cr.GetIntValue();
+            int planetsCount = cr.getInt();
             for (int i = 0; i < planetsCount; i++)
             {
                 Planet pln = new Planet();
                 pln.parent = parentLocation;
-                pln.id = cr.GetIntValue();
-                pln.planetName = cr.GetStringValue();
-                pln.planetType = cr.GetIntValue();
-                pln.r_speed = cr.GetIntValue();
-                pln.orbit = cr.GetIntValue();
-                pln.radius = cr.GetIntValue();
-                pln.color = cr.GetIntValue();
-                pln.atmosphere = cr.GetIntValue();
-                pln.domain = mainData.domains[cr.GetIntValue()];
-                pln.atmosphere_speedX = cr.GetIntValue();
-                pln.atmosphere_speedY = cr.GetIntValue();
-                pln.price_coef = cr.GetIntValue();
+                pln.id = cr.getInt();
+                pln.planetName = cr.getStr();
+                pln.planetType = cr.getInt();
+                pln.r_speed = cr.getInt();
+                pln.orbit = cr.getInt();
+                pln.radius = cr.getInt();
+                pln.color = cr.getInt();
+                pln.atmosphere = cr.getInt();
+                pln.domain = mainData.domains[cr.getInt()];
+                pln.atmosphere_speedX = cr.getInt();
+                pln.atmosphere_speedY = cr.getInt();
+                pln.price_coef = cr.getInt();
                 parentLocation.planets.Add(pln.id, pln);
                 res.Add(pln.id, pln);
             }
@@ -95,19 +95,19 @@ namespace RSclient
         public ItemCollection getItems(CommandReader cr, MainData mainData)
         {
             ItemCollection res = new ItemCollection();
-            int itemTypeCount = cr.GetIntValue();
+            int itemTypeCount = cr.getInt();
             for (int i = 0; i < itemTypeCount; i++)
             {
-                int itemCount = cr.GetIntValue();
+                int itemCount = cr.getInt();
                 for (int j = 0; j < itemCount; j++)
                 {
-                    int item_id = cr.GetIntValue();
-                    Item.ItemType item_itemType = (Item.ItemType)cr.GetIntValue();
-                    String item_description = cr.GetStringValue();
-                    int item_volume = cr.GetIntValue();
-                    int item_region_id = cr.GetIntValue();
-                    int item_use_only = cr.GetIntValue();
-                    int item_price = cr.GetIntValue();
+                    int item_id = cr.getInt();
+                    Item.ItemType item_itemType = (Item.ItemType)cr.getInt();
+                    String item_description = cr.getStr();
+                    int item_volume = cr.getInt();
+                    int item_region_id = cr.getInt();
+                    int item_use_only = cr.getInt();
+                    int item_price = cr.getInt();
                     switch (item_itemType)
                     {
                         case Item.ItemType.consumable:
@@ -123,18 +123,18 @@ namespace RSclient
                             }
                         case Item.ItemType.device:
                             {
-                                String device_vendorStr = cr.GetStringValue();
-                                Device.DeviceType device_deviceType = (Device.DeviceType)cr.GetIntValue();
-                                int device_durability = cr.GetIntValue();
+                                String device_vendorStr = cr.getStr();
+                                Device.DeviceType device_deviceType = (Device.DeviceType)cr.getInt();
+                                int device_durability = cr.getInt();
                                 switch (device_deviceType)
                                 {
                                     case Device.DeviceType.Body:
                                         {
                                             Body dev = new Body();
-                                            int body_slot_weapons = cr.GetIntValue();
-                                            int body_slot_droids = cr.GetIntValue();
-                                            int body_slot_shield = cr.GetIntValue();
-                                            int body_slot_hyper = cr.GetIntValue();
+                                            int body_slot_weapons = cr.getInt();
+                                            int body_slot_droids = cr.getInt();
+                                            int body_slot_shield = cr.getInt();
+                                            int body_slot_hyper = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -155,9 +155,9 @@ namespace RSclient
                                     case Device.DeviceType.Droid:
                                         {
                                             Droid dev = new Droid();
-                                            int droid_power = cr.GetIntValue();
-                                            int droid_time_reload = cr.GetIntValue();
-                                            int radius = cr.GetIntValue();
+                                            int droid_power = cr.getInt();
+                                            int droid_time_reload = cr.getInt();
+                                            int radius = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -176,8 +176,8 @@ namespace RSclient
                                     case Device.DeviceType.Engine:
                                         {
                                             Engine dev = new Engine();
-                                            int engine_power = cr.GetIntValue();
-                                            int engine_economic = cr.GetIntValue();
+                                            int engine_power = cr.getInt();
+                                            int engine_economic = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -196,7 +196,7 @@ namespace RSclient
                                     case Device.DeviceType.Fuelbag:
                                         {
                                             Fuelbag dev = new Fuelbag();
-                                            int fuelbag_compress = cr.GetIntValue();
+                                            int fuelbag_compress = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -214,9 +214,9 @@ namespace RSclient
                                     case Device.DeviceType.Hyper:
                                         {
                                             Hyper dev = new Hyper();
-                                            int hyper_radius = cr.GetIntValue();
-                                            int hyper_time_start = cr.GetIntValue();
-                                            int hyper_time_reload = cr.GetIntValue();
+                                            int hyper_radius = cr.getInt();
+                                            int hyper_time_start = cr.getInt();
+                                            int hyper_time_reload = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -236,9 +236,9 @@ namespace RSclient
                                     case Device.DeviceType.Radar:
                                         {
                                             Radar dev = new Radar();
-                                            int radar_radius = cr.GetIntValue();
-                                            int radar_defense = cr.GetIntValue();
-                                            int big_radius = cr.GetIntValue();
+                                            int radar_radius = cr.getInt();
+                                            int radar_defense = cr.getInt();
+                                            int big_radius = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -258,7 +258,7 @@ namespace RSclient
                                     case Device.DeviceType.Shield:
                                         {
                                             Shield dev = new Shield();
-                                            int shield_power = cr.GetIntValue();
+                                            int shield_power = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -276,11 +276,11 @@ namespace RSclient
                                     case Device.DeviceType.Weapon:
                                         {
                                             Weapon dev = new Weapon();
-                                            int weapon_weaponType = cr.GetIntValue();
-                                            int weapon_radius = cr.GetIntValue();
-                                            int weapon_power = cr.GetIntValue();
-                                            int weapon_time_start = cr.GetIntValue();
-                                            int weapon_time_reload = cr.GetIntValue();
+                                            int weapon_weaponType = cr.getInt();
+                                            int weapon_radius = cr.getInt();
+                                            int weapon_power = cr.getInt();
+                                            int weapon_time_start = cr.getInt();
+                                            int weapon_time_reload = cr.getInt();
                                             dev.id = item_id;
                                             dev.itemType = item_itemType;
                                             dev.description = item_description;
@@ -310,19 +310,19 @@ namespace RSclient
         public Dictionary<int, Equip> getEquips(CommandReader cr, MainData mainData)
         {
             Dictionary<int, Equip> res = new Dictionary<int, Equip>();
-            int equipCount = cr.GetIntValue();
+            int equipCount = cr.getInt();
             for (int i = 0; i < equipCount; i++)
             {
                 Equip eq = new Equip();
-                eq.id = cr.GetIntValue();
-                int item_id = cr.GetIntValue();
-                Item.ItemType iType = (Item.ItemType)cr.GetIntValue();
-                int dType = cr.GetIntValue();
-                eq.in_use = cr.GetIntValue()==0 ? false: true;
-                eq.wear = cr.GetIntValue();
-                int location  = cr.GetIntValue();
+                eq.id = cr.getInt();
+                int item_id = cr.getInt();
+                Item.ItemType iType = (Item.ItemType)cr.getInt();
+                int dType = cr.getInt();
+                eq.in_use = cr.getInt()==0 ? false: true;
+                eq.wear = cr.getInt();
+                int location  = cr.getInt();
                 eq.location = location == 0 ? null : mainData.planets[location];
-                eq.num = cr.GetIntValue();
+                eq.num = cr.getInt();
                 switch (iType)
                 {
                     case Item.ItemType.consumable:
@@ -395,35 +395,35 @@ namespace RSclient
         public User getUserData(CommandReader cr, MainData mainData, User user)
         {
             User res = user;
-            res.id = cr.GetIntValue();
-            res.x = cr.GetIntValue();
-            res.y = cr.GetIntValue();
-            res.domain = mainData.domains[cr.GetIntValue()];
-            int inPlanet = cr.GetIntValue();
+            res.id = cr.getInt();
+            res.x = cr.getInt();
+            res.y = cr.getInt();
+            res.domain = mainData.domains[cr.getInt()];
+            int inPlanet = cr.getInt();
             if (inPlanet == 0) { res.inPlanet = null; }
             else { res.inPlanet = mainData.planets[inPlanet]; }
-            res.pilotName = cr.GetStringValue();
-            res.shipName = cr.GetStringValue();
+            res.pilotName = cr.getStr();
+            res.shipName = cr.getStr();
             res.equips = getEquips(cr, mainData);
             return res;
         }
         public User getAddUser(CommandReader cr, MainData mainData)
         {
             User res = new User();
-            res.id = cr.GetIntValue();
-            res.shipName = cr.GetStringValue();
-            res.x = cr.GetIntValue();
-            res.y = cr.GetIntValue();
-            res.targetX = cr.GetIntValue();
-            res.targetY = cr.GetIntValue();
-            res.domain = mainData.domains[cr.GetIntValue()];
+            res.id = cr.getInt();
+            res.shipName = cr.getStr();
+            res.x = cr.getInt();
+            res.y = cr.getInt();
+            res.targetX = cr.getInt();
+            res.targetY = cr.getInt();
+            res.domain = mainData.domains[cr.getInt()];
             res.equips = getEquips(cr, mainData);
             res.updateUserShip();
             return res;
         }
         public int getRemoveUser(CommandReader cr)
         {
-            int res = cr.GetIntValue();
+            int res = cr.getInt();
             return res;
         }
     }

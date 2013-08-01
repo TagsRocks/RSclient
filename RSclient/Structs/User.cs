@@ -332,21 +332,6 @@ namespace RSclient
                 if (this.userShip.weapons[i].wear < 0) { this.userShip.weapons[i].wear = 0; }
             }
         }
-        public void updateToSQL(string dbConnect)
-        {
-            SqlCommand sqlCommand = new SqlCommand("[dbo].[SetUserTouchPoint]");
-            sqlCommand.Connection = new SqlConnection(dbConnect);
-            sqlCommand.Parameters.Clear();
-            sqlCommand.CommandType = CommandType.StoredProcedure;
-            sqlCommand.Parameters.AddWithValue("@target_x", this.targetX);
-            sqlCommand.Parameters.AddWithValue("@target_y", this.targetY);
-            sqlCommand.Parameters.AddWithValue("@user_x", this.x);
-            sqlCommand.Parameters.AddWithValue("@user_y", this.y);
-            sqlCommand.Parameters.AddWithValue("@user_id", this.id);
-            sqlCommand.Connection.Open();
-            sqlCommand.ExecuteNonQuery();
-            sqlCommand.Connection.Close();
-        }
         #endregion
     }
 }

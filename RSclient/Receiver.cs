@@ -33,7 +33,7 @@ namespace RSclient
                     {
                         case Command.CList.LoginUser:
                             {
-                                user.serverTime = cmdReader.GetIntValue();
+                                user.serverTime = cmdReader.getInt();
                                 user.isPassword = true;
                                 break;
                             }
