@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 
 namespace RSclient
 {
-    class ReceiverParams
+    public class AI
     {
-        public User user;
-        public MainData mainData;
-        public AI ai;
+        private User user;
+        private MainData mainData;
 
-        public ReceiverParams(User user, MainData mainData, AI ai)
+        public AI(User user, MainData mainData)
         {
             this.user = user;
             this.mainData = mainData;
-            this.ai = ai;
+        }
+
+        public void start()
+        {
+            int i = 0;
         }
     }
 }

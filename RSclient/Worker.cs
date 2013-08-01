@@ -14,7 +14,7 @@ namespace RSclient
         Client client = new Client();
         User user = new User();
         MainData mainData = null;
-
+        AI ai;
         public void doWork(object param)
         {
             if (param is ThreadParams)
@@ -26,7 +26,7 @@ namespace RSclient
             }
             if (user.login != "")
             {
-
+                ai = new AI(user, mainData);
                 user.handler = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 user.handler.Connect(config.ipAddr, config.portListener);
                 user.isLogin = false;
@@ -41,7 +41,7 @@ namespace RSclient
                 client.sendLogin(user.login, user.handler);
                 user.isLogin = true;
                 Thread receiver = new Thread(new ParameterizedThreadStart(new Receiver().doWork));
-                ReceiverParams rp = new ReceiverParams(user, mainData);
+                ReceiverParams rp = new ReceiverParams(user, mainData, ai);
                 receiver.Name = @"Receiver: " + user.login;
                 receiver.Start(rp);
                 receiver.IsBackground = true;

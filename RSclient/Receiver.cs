@@ -10,6 +10,7 @@ namespace RSclient
     {
         private User user = null;
         private MainData mainData = null;
+        private AI ai = null;
         private bool isWork = true;
 
         public void doWork(object param)
@@ -19,6 +20,7 @@ namespace RSclient
                 ReceiverParams p = (ReceiverParams)param;
                 user = p.user;
                 mainData = p.mainData;
+                ai = p.ai;
             }
             if (user != null)
             {
@@ -95,6 +97,8 @@ namespace RSclient
                                 Loader loader = new Loader();
                                 user = loader.getUserData(cmdReader, mainData, user);
                                 user.isLoadComplite = true;
+                                Action action = ai.start;
+                                action.BeginInvoke(null, null);
                                 break;
                             }
                         case Command.CList.addUser:

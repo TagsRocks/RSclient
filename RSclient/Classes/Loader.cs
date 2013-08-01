@@ -106,7 +106,6 @@ namespace RSclient
                     String item_description = cr.GetStringValue();
                     int item_volume = cr.GetIntValue();
                     int item_region_id = cr.GetIntValue();
-                    int item_packing = cr.GetIntValue();
                     int item_use_only = cr.GetIntValue();
                     int item_price = cr.GetIntValue();
                     switch (item_itemType)
@@ -119,7 +118,6 @@ namespace RSclient
                                 item.description = item_description;
                                 item.volume = item_volume;
                                 item.region = item_region_id;
-                                item.packing = item_packing;
                                 res.consumables.Add(item.id, item);
                                 break;
                             }
@@ -142,7 +140,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;
@@ -166,7 +163,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;
@@ -187,7 +183,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;
@@ -207,7 +202,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;
@@ -228,7 +222,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;
@@ -251,7 +244,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;
@@ -272,7 +264,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;
@@ -295,7 +286,6 @@ namespace RSclient
                                             dev.description = item_description;
                                             dev.volume = item_volume;
                                             dev.region = item_region_id;
-                                            dev.packing = item_packing;
                                             dev.vendorStr = device_vendorStr;
                                             dev.deviceType = device_deviceType;
                                             dev.durability = device_durability;

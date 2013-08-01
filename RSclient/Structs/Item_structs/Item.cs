@@ -19,7 +19,6 @@ namespace RSclient
         public string description;
         public int volume;
         public int region;
-        public int packing;
         public int use_only;
         public int price;
     }

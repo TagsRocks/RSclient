@@ -279,7 +279,7 @@ namespace RSclient
             if (this.userShip.fuelbag != null)
             {
                 Fuelbag fb = this.userShip.fuelbag.item as Fuelbag;
-                this.userShip.maxFuel = fb.volume * fb.compress / 100 * this.userShip.fuel.item.packing;
+                this.userShip.maxFuel = fb.volume * fb.compress / 100;
             }
             if (this.userShip.engine != null)
             {

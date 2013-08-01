@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AI.cs" />
     <Compile Include="Classes\Client.cs" />
     <Compile Include="Classes\Command.cs" />
     <Compile Include="Classes\CommandReader.cs" />
