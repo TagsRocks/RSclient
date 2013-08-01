@@ -428,6 +428,7 @@ namespace RSclient
             res.targetY = cr.GetIntValue();
             res.domain = mainData.domains[cr.GetIntValue()];
             res.equips = getEquips(cr, mainData);
+            res.updateUserShip();
             return res;
         }
         public int getRemoveUser(CommandReader cr)

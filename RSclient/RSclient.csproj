@@ -65,7 +65,7 @@
     <Compile Include="Classes\Config.cs" />
     <Compile Include="Classes\Loader.cs" />
     <Compile Include="Receiver.cs" />
-    <Compile Include="Structs\Item_structs\Consumable\Consumable.cs" />
+    <Compile Include="Structs\Item_structs\Consumable.cs" />
     <Compile Include="Structs\Item_structs\Device.cs" />
     <Compile Include="Structs\Domain.cs" />
     <Compile Include="fmMain.cs">
@@ -137,6 +137,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Structs\Item_structs\Consumable\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

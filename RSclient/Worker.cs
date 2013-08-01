@@ -50,18 +50,18 @@ namespace RSclient
             }
         }
 
-        void user_isLoadingComplite(object sender, EventArgs e)
+        private void user_isLoadingComplite(object sender, EventArgs e)
         {
             client.sendCommand(new Command(Command.CList.loadComplite), user.handler);
             user.updateUserShip();
         }
 
-        void mainData_isItemsLoad(object sender, EventArgs e)
+        private void mainData_isItemsLoad(object sender, EventArgs e)
         {
             client.sendCommand(new Command(Command.CList.getPlayerData), user.handler);
         }
 
-        void mainData_isPlanetsLoad(object sender, EventArgs e)
+        private void mainData_isPlanetsLoad(object sender, EventArgs e)
         {
             if (!mainData.isLoaded&&!mainData.isItems&&!mainData.loadingItems)
             {
@@ -70,7 +70,7 @@ namespace RSclient
             }
         }
 
-        void user_isPasswordComplite(object sender, EventArgs e)
+        private void user_isPasswordComplite(object sender, EventArgs e)
         {
             if (!mainData.isLoaded && !mainData.isDomains && !mainData.loadingDomains)
             {

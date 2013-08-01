@@ -10,7 +10,7 @@ namespace RSclient
     {
         private User user = null;
         private MainData mainData = null;
-        public bool isWork = true;
+        private bool isWork = true;
 
         public void doWork(object param)
         {
