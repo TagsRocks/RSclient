@@ -46,16 +46,20 @@ namespace RSclient
 
         public string password;
         public Socket handler;
-        public List<string> log = new List<string>();
+        public string log ="";
         public int x;
         public int y;
         public int targetX;
         public int targetY;
+        public Client client = new Client();
         public Domain domain = new Domain();
         public Planet inPlanet = new Planet();
         public Dictionary<int, Equip> equips = new Dictionary<int, Equip>();
         public int protocolVersion;
         public Dictionary<int, User> usersClose = new Dictionary<int, User>();
+        public Dictionary<int, Location> locations = new Dictionary<int, Location>();
+        public Dictionary<int, Planet> planets = new Dictionary<int, Planet>();
+        public MainData mainData = null;
         public TargetType targetType;
         public int target;
         public UserShip userShip = new UserShip();

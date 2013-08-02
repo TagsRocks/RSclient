@@ -9,7 +9,6 @@ namespace RSclient
     public class Receiver
     {
         private User user = null;
-        private MainData mainData = null;
         private AI ai = null;
         private bool isWork = true;
 
@@ -19,26 +18,24 @@ namespace RSclient
             {
                 ReceiverParams p = (ReceiverParams)param;
                 user = p.user;
-                mainData = p.mainData;
                 ai = p.ai;
             }
             if (user != null)
             {
-                Client client = new Client();
                 while (isWork)
                 {
-                    Command command = client.waitCommand(user.handler);
+                    Command command = user.client.waitCommand(user.handler);
                     CommandReader cmdReader = new CommandReader(command);
                     switch (command.idCommand)
                     {
                         case Command.CList.LoginUser:
                             {
                                 user.serverTime = cmdReader.getInt();
-                                user.isPassword = true;
-                                break;
-                            }
-                        case Command.CList.PasswordUser:
-                            {
+                                if (!user.mainData.isLoaded && !user.mainData.isDomains && !user.mainData.loadingDomains)
+                                {
+                                    user.mainData.loadingDomains = true;
+                                    user.client.sendCommand(new Command(Command.CList.getDomains), user.handler);
+                                }
                                 break;
                             }
                         case Command.CList.FailLogin:
@@ -56,46 +53,53 @@ namespace RSclient
                         case Command.CList.getDomains:
                             {
                                 Loader loader = new Loader();
-                                mainData.domains = loader.getDomains(cmdReader);
-                                mainData.isDomains = true;
-                                mainData.loadingDomains = false;
+                                user.mainData.domains = loader.getDomains(cmdReader);
+                                user.mainData.isDomains = true;
+                                user.mainData.loadingDomains = false;
                                 break;
                             }
                         case Command.CList.getNebulas:
                             {
                                 Loader loader = new Loader();
-                                mainData.nebulas = loader.getNebulas(cmdReader);
-                                mainData.isNebulas = true;
-                                mainData.loadingNebulas = false;
+                                user.mainData.nebulas = loader.getNebulas(cmdReader);
+                                user.mainData.isNebulas = true;
+                                user.mainData.loadingNebulas = false;
                                 break;
                             }
                         case Command.CList.getLocations:
                             {
                                 Loader loader = new Loader();
-                                mainData.locations = loader.getLocations(cmdReader, mainData);
-                                mainData.isLocations = true;
-                                mainData.loadingLocations = false;
+                                loader.getLocations(cmdReader, user);
+                                for (int i = 0; i < user.locations.Count; i++)
+                                {
+                                    user.log += "LoadLocation: " + user.locations.ElementAt(i).Value.starName + "\r\n";
+                                    if (!user.locations.ElementAt(i).Value.isLoadPlanet)
+                                    {
+                                        List<byte> rawData = new List<byte>();
+                                        rawData.AddRange(user.client.intToByteArray(user.locations.ElementAt(i).Value.id));
+                                        user.client.sendCommand(new Command(Command.CList.getPlanets, rawData.ToArray()), user.handler);
+                                    }
+                                }
                                 break;
                             }
                         case Command.CList.getPlanets:
                             {
                                 Loader loader = new Loader();
-                                mainData.planets = loader.getPlanets(cmdReader, mainData);
-                                mainData.loadingPlanets = false;
+                                loader.getPlanets(cmdReader, user);
                                 break;
                             }
                         case Command.CList.getItems:
                             {
                                 Loader loader = new Loader();
-                                mainData.itemCollect = loader.getItems(cmdReader, mainData);
-                                mainData.isItems = true;
-                                mainData.loadingItems = false;
+                                user.mainData.itemCollect = loader.getItems(cmdReader, user);
+                                user.mainData.isItems = true;
+                                user.mainData.loadingItems = false;
                                 break;
                             }
                         case Command.CList.getPlayerData:
                             {
                                 Loader loader = new Loader();
-                                user = loader.getUserData(cmdReader, mainData, user);
+                                user = loader.getUserData(cmdReader, user);
                                 user.isLoadComplite = true;
                                 Action action = ai.start;
                                 action.BeginInvoke(null, null);
@@ -104,7 +108,7 @@ namespace RSclient
                         case Command.CList.addUser:
                             {
                                 Loader loader = new Loader();
-                                User userAdd = loader.getAddUser(cmdReader, mainData);
+                                User userAdd = loader.getAddUser(cmdReader, user);
                                 user.usersClose.Add(userAdd.id, userAdd);
                                 break;
                             }

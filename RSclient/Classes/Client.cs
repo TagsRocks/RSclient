@@ -6,9 +6,9 @@ using System.Text;
 
 namespace RSclient
 {
-    class Client
+    public class Client
     {
-        public int protocolVersion = 9;
+        public int protocolVersion = 10;
 
         public Command waitCommand(Socket handler)
         {

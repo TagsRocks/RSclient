@@ -17,9 +17,10 @@ namespace RSclient
     public partial class fmMain : Form
     {
         private Config config = new Config();
-        public MainData mainData = new MainData();
-        List<Thread> clientThreads = new List<Thread>();
-        List<ThreadParams> tps = new List<ThreadParams>();
+        private MainData mainData = new MainData();
+        private List<Thread> clientThreads = new List<Thread>();
+        private List<ThreadParams> tps = new List<ThreadParams>();
+
         public fmMain()
         {
             InitializeComponent();
@@ -27,8 +28,8 @@ namespace RSclient
 
         private void fmMain_Load(object sender, EventArgs e)
         {
-            //clientThreads.Add(new Thread(new ParameterizedThreadStart(new Worker().doWork)));
-            //tps.Add(new ThreadParams("test1", "test", mainData));
+            clientThreads.Add(new Thread(new ParameterizedThreadStart(new Worker().doWork)));
+            tps.Add(new ThreadParams("traider", "SNmLwpLn", mainData));
             clientThreads.Add(new Thread(new ParameterizedThreadStart(new Worker().doWork)));
             tps.Add(new ThreadParams("traider2", "SNmLwpLn", mainData));
             

@@ -9,13 +9,11 @@ namespace RSclient
     class ReceiverParams
     {
         public User user;
-        public MainData mainData;
         public AI ai;
 
-        public ReceiverParams(User user, MainData mainData, AI ai)
+        public ReceiverParams(User user, AI ai)
         {
             this.user = user;
-            this.mainData = mainData;
             this.ai = ai;
         }
     }

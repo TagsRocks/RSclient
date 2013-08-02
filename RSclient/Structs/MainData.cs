@@ -9,20 +9,13 @@ namespace RSclient
     public class MainData
     {
         public delegate void MainDataEventHandler(object sender, EventArgs e);
-
         public Dictionary<int, Domain> domains = new Dictionary<int,Domain>();
-        public Dictionary<int, Location> locations = new Dictionary<int,Location>();
         public Dictionary<int, Nebula> nebulas = new Dictionary<int,Nebula>();
-        public Dictionary<int, Planet> planets = new Dictionary<int,Planet>();
         public ItemCollection itemCollect = new ItemCollection();
         private bool _isDomains = false;
-        private bool _isLocations = false;
-        private bool _isPlanets = false;
         private bool _isNebulas = false;
         private bool _isItems = false;
         public bool loadingDomains = false;
-        public bool loadingLocations = false;
-        public bool loadingPlanets = false;
         public bool loadingNebulas = false;
         public bool loadingItems = false;
         public bool isLoaded = false;
@@ -45,42 +38,7 @@ namespace RSclient
                 }
             }
         }
-        public bool isLocations
-        {
-            get
-            {
-                return _isLocations;
-            }
-            set
-            {
-                if (value != _isLocations)
-                {
-                    _isLocations = value;
-                    if (_isLocations)
-                    {
-                        OnIsLocationsLoadEvent();
-                    }
-                }
-            }
-        }
-        public bool isPlanets
-        {
-            get
-            {
-                return _isPlanets;
-            }
-            set
-            {
-                if (value != _isPlanets)
-                {
-                    _isPlanets = value;
-                    if (_isPlanets)
-                    {
-                        OnIsPlanetsLoadEvent();
-                    }
-                }
-            }
-        }
+
         public bool isNebulas
         {
             get
@@ -118,24 +76,12 @@ namespace RSclient
             }
         }
         public event MainDataEventHandler isDomainsLoad;
-        public event MainDataEventHandler isLocationsLoad;
-        public event MainDataEventHandler isPlanetsLoad;
         public event MainDataEventHandler isItemsLoad;
         public event MainDataEventHandler isNebulasLoad;
         protected virtual void OnIsDomainsLoadEvent()
         {
             if (isDomainsLoad != null)
                 isDomainsLoad(this, EventArgs.Empty);
-        }
-        protected virtual void OnIsLocationsLoadEvent()
-        {
-            if (isLocationsLoad != null)
-                isLocationsLoad(this, EventArgs.Empty);
-        }
-        protected virtual void OnIsPlanetsLoadEvent()
-        {
-            if (isPlanetsLoad != null)
-                isPlanetsLoad(this, EventArgs.Empty);
         }
         protected virtual void OnIsItemsLoadEvent()
         {

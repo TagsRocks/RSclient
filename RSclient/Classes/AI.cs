@@ -9,12 +9,10 @@ namespace RSclient
     public class AI
     {
         private User user;
-        private MainData mainData;
 
-        public AI(User user, MainData mainData)
+        public AI(User user)
         {
             this.user = user;
-            this.mainData = mainData;
         }
 
         public void start()

@@ -14,7 +14,8 @@ namespace RSclient
         public int x;
         public int y;
         public int radius;
-        public Domain domain;
+        public int domain;
         public Dictionary<int, Planet> planets;
+        public bool isLoadPlanet = false;
     }
 }
