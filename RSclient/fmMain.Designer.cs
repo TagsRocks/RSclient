@@ -28,50 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.tbLog = new System.Windows.Forms.TextBox();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tbLog);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(341, 392);
-            this.panel2.TabIndex = 6;
-            // 
-            // tbLog
-            // 
-            this.tbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLog.Location = new System.Drawing.Point(0, 0);
-            this.tbLog.MaxLength = 1048576;
-            this.tbLog.Multiline = true;
-            this.tbLog.Name = "tbLog";
-            this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(341, 392);
-            this.tbLog.TabIndex = 0;
             // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 392);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(304, 69);
             this.Name = "fmMain";
             this.Text = "RSclient";
             this.Load += new System.EventHandler(this.fmMain_Load);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox tbLog;
     }
 }
 

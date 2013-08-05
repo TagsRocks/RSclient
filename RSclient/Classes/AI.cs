@@ -8,16 +8,30 @@ namespace RSclient
 {
     public class AI
     {
-        private User user;
-
-        public AI(User user)
+        private enum Instinkt : int
         {
-            this.user = user;
+            none = 0
         }
 
         public void start()
         {
             
+        }
+        public void newObject()
+        {
+
+        }
+        public void removeObject()
+        {
+
+        }
+        public void moveObject()
+        {
+
+        }
+        public void newAction()
+        {
+
         }
     }
 }

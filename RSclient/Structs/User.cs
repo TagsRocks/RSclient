@@ -27,6 +27,8 @@ namespace RSclient
             none = 0,
             attack = 1,
             repair = 2,
+            fly = 3,
+            stop = 4
         }
         public enum ErrorList : byte
         {
@@ -66,6 +68,7 @@ namespace RSclient
         public double gcd;
         public int serverTime = 0;
         public ErrorList error;
+        public AI ai = new AI();
         
         #region ObservableObjects
         public bool isPassword
@@ -283,7 +286,7 @@ namespace RSclient
             if (this.userShip.fuelbag != null)
             {
                 Fuelbag fb = this.userShip.fuelbag.item as Fuelbag;
-                this.userShip.maxFuel = fb.volume * fb.compress / 100;
+                this.userShip.maxFuel = fb.volume * fb.compress;
             }
             if (this.userShip.engine != null)
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace RSclient
 {
@@ -44,6 +45,45 @@ namespace RSclient
                 neb.scale = cr.getInt();
                 neb.angle = cr.getInt();
                 res.Add(neb.id, neb);
+            }
+            return res;
+        }
+        public void getUseEquip(CommandReader cr, User user)
+        {
+            int useEquip = cr.getInt();
+            int userId = cr.getInt();
+            int targetUserId = cr.getInt();
+            User.ActionList action = (User.ActionList)cr.getInt();
+            int actioonValue = cr.getInt();
+            
+        }
+        public MoveUser getTouchUser(CommandReader cr, User user)
+        {
+            MoveUser res = null;
+            int userId = cr.getInt();
+            int userTX = cr.getInt();
+            int userTY = cr.getInt();
+            double flyTime = cr.getDbl();
+            double unic_epox = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
+            User usr = null;
+            if (user.usersClose.ContainsKey(userId))
+            {
+                usr = user.usersClose[userId];
+            }
+            if (user.id == userId)
+            {
+                usr = user;
+            }
+            if (usr != null)
+            {
+                res = new MoveUser();
+                res.userId = usr.id;
+                res.x = usr.x;
+                res.y = usr.y;
+                res.targetX = userTX;
+                res.targetY = userTY;
+                res.startMove = unic_epox;
+                res.flyTime = flyTime;
             }
             return res;
         }

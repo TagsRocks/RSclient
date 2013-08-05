@@ -65,6 +65,7 @@
     <Compile Include="Classes\CommandReader.cs" />
     <Compile Include="Classes\Config.cs" />
     <Compile Include="Classes\Loader.cs" />
+    <Compile Include="Classes\MoveUser.cs" />
     <Compile Include="Receiver.cs" />
     <Compile Include="Structs\Item_structs\Consumable.cs" />
     <Compile Include="Structs\Item_structs\Device.cs" />
