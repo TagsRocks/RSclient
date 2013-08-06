@@ -10,7 +10,6 @@ namespace RSclient
 {
     public class Worker
     {
-        Config config = new Config();
         User user = new User();
         public void doWork(object param)
         {
@@ -19,18 +18,17 @@ namespace RSclient
                 ThreadParams p = (ThreadParams)param;
                 user.login = p.login;
                 user.password = p.password;
-                user.mainData = p.mainData;
             }
             if (user.login != "")
             {
                 user.handler = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                user.handler.Connect(config.ipAddr, config.portListener);
+                user.handler.Connect(Config.ipAddr, Config.portListener);
                 user.isLogin = false;
                 user.isLoginComplite += user_isLoginComplite;
                 user.isPasswordComplite += user_isPasswordComplite;
-                user.mainData.isDomainsLoad += mainData_isDomainsLoad;
-                user.mainData.isNebulasLoad += mainData_isNebulasLoad;
-                user.mainData.isItemsLoad += mainData_isItemsLoad;
+                MainData.isDomainsLoad += mainData_isDomainsLoad;
+                MainData.isNebulasLoad += mainData_isNebulasLoad;
+                MainData.isItemsLoad += mainData_isItemsLoad;
                 user.isLoadingComplite += user_isLoadingComplite;
                 user.client.sendLogin(user.login, user.handler);
                 user.isLogin = true;
@@ -65,18 +63,18 @@ namespace RSclient
 
         private void mainData_isDomainsLoad(object sender, EventArgs e)
         {
-            if (!user.mainData.isLoaded && !user.mainData.isNebulas && !user.mainData.loadingNebulas)
+            if (!MainData.isLoaded && !MainData.isNebulas && !MainData.loadingNebulas)
             {
-                user.mainData.loadingNebulas = true;
+                MainData.loadingNebulas = true;
                 user.client.sendCommand(new Command(Command.CList.getNebulas), user.handler);
             }
         }
 
         private void mainData_isNebulasLoad(object sender, EventArgs e)
         {
-            if (!user.mainData.isLoaded && !user.mainData.isItems && !user.mainData.loadingItems)
+            if (!MainData.isLoaded && !MainData.isItems && !MainData.loadingItems)
             {
-                user.mainData.loadingItems = true;
+                MainData.loadingItems = true;
                 user.client.sendCommand(new Command(Command.CList.getItems), user.handler);
             }
         }

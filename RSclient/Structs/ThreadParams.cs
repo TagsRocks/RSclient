@@ -10,13 +10,11 @@ namespace RSclient
     {
         public string login;
         public string password;
-        public MainData mainData;
 
-        public ThreadParams(string log, string pass, MainData mainData)
+        public ThreadParams(string log, string pass)
         {
             this.login = log;
             this.password = pass;
-            this.mainData = mainData;
         }
 
     }

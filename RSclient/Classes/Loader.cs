@@ -8,9 +8,9 @@ using System.Timers;
 
 namespace RSclient
 {
-    public class Loader
+    public static class Loader
     {
-        public Dictionary<int, Domain> getDomains(CommandReader cr)
+        public static Dictionary<int, Domain> getDomains(CommandReader cr)
         {
             Dictionary<int, Domain> res = new Dictionary<int,Domain>();
             int domainCount = cr.getInt();
@@ -31,7 +31,7 @@ namespace RSclient
             }
             return res;
         }
-        public Dictionary<int, Nebula> getNebulas(CommandReader cr)
+        public static Dictionary<int, Nebula> getNebulas(CommandReader cr)
         {
             Dictionary<int, Nebula> res = new Dictionary<int, Nebula>();
             int nebulasCount = cr.getInt();
@@ -48,7 +48,7 @@ namespace RSclient
             }
             return res;
         }
-        public void getUseEquip(CommandReader cr, User user)
+        public static void getUseEquip(CommandReader cr, User user)
         {
             int useEquip = cr.getInt();
             int userId = cr.getInt();
@@ -57,13 +57,14 @@ namespace RSclient
             int actioonValue = cr.getInt();
             
         }
-        public MoveUser getTouchUser(CommandReader cr, User user)
+        public static MoveUser getTouchUser(CommandReader cr, User user)
         {
             MoveUser res = null;
             int userId = cr.getInt();
             int userTX = cr.getInt();
             int userTY = cr.getInt();
             double flyTime = cr.getDbl();
+            int fuel = cr.getInt();
             double unic_epox = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
             User usr = null;
             if (user.usersClose.ContainsKey(userId))
@@ -84,10 +85,11 @@ namespace RSclient
                 res.targetY = userTY;
                 res.startMove = unic_epox;
                 res.flyTime = flyTime;
+                res.fuel = fuel;
             }
             return res;
         }
-        public void getLocations(CommandReader cr, User user)
+        public static void getLocations(CommandReader cr, User user)
         {
             int locationCount = cr.getInt();
             for (int i = 0; i < locationCount; i++)
@@ -103,7 +105,7 @@ namespace RSclient
                 user.locations.Add(loc.id, loc);
             }
         }
-        public void getPlanets(CommandReader cr, User user)
+        public static void getPlanets(CommandReader cr, User user)
         {
             Location parentLocation = user.locations[cr.getInt()];
             parentLocation.planets = new Dictionary<int, Planet>();
@@ -121,7 +123,7 @@ namespace RSclient
                 pln.radius = cr.getInt();
                 pln.color = cr.getInt();
                 pln.atmosphere = cr.getInt();
-                pln.domain = user.mainData.domains[cr.getInt()];
+                pln.domain = MainData.domains[cr.getInt()];
                 pln.atmosphere_speedX = cr.getInt();
                 pln.atmosphere_speedY = cr.getInt();
                 pln.price_coef = cr.getInt();
@@ -135,7 +137,7 @@ namespace RSclient
                 }
             }
         }
-        public ItemCollection getItems(CommandReader cr, User user)
+        public static ItemCollection getItems(CommandReader cr, User user)
         {
             ItemCollection res = new ItemCollection();
             int itemTypeCount = cr.getInt();
@@ -350,7 +352,7 @@ namespace RSclient
             }
             return res;
         }
-        public Dictionary<int, Equip> getEquips(CommandReader cr, User user)
+        public static Dictionary<int, Equip> getEquips(CommandReader cr, User user)
         {
             Dictionary<int, Equip> res = new Dictionary<int, Equip>();
             int equipCount = cr.getInt();
@@ -370,7 +372,7 @@ namespace RSclient
                 {
                     case Item.ItemType.consumable:
                         {
-                            Consumable item = user.mainData.itemCollect.get<Consumable>(item_id);
+                            Consumable item = MainData.itemCollect.get<Consumable>(item_id);
                             eq.item = item;
                             break;
                         }
@@ -381,49 +383,49 @@ namespace RSclient
                             {
                                 case Device.DeviceType.Body:
                                     {
-                                        Body item = user.mainData.itemCollect.get<Body>(item_id);
+                                        Body item = MainData.itemCollect.get<Body>(item_id);
                                         eq.item = item;
                                         break;
                                     }
                                 case Device.DeviceType.Droid:
                                     {
-                                        Droid item = user.mainData.itemCollect.get<Droid>(item_id);
+                                        Droid item = MainData.itemCollect.get<Droid>(item_id);
                                         eq.item = item;
                                         break;
                                     }
                                 case Device.DeviceType.Engine:
                                     {
-                                        Engine item = user.mainData.itemCollect.get<Engine>(item_id);
+                                        Engine item = MainData.itemCollect.get<Engine>(item_id);
                                         eq.item = item;
                                         break;
                                     }
                                 case Device.DeviceType.Fuelbag:
                                     {
-                                        Fuelbag item = user.mainData.itemCollect.get<Fuelbag>(item_id);
+                                        Fuelbag item = MainData.itemCollect.get<Fuelbag>(item_id);
                                         eq.item = item;
                                         break;
                                     }
                                 case Device.DeviceType.Hyper:
                                     {
-                                        Hyper item = user.mainData.itemCollect.get<Hyper>(item_id);
+                                        Hyper item = MainData.itemCollect.get<Hyper>(item_id);
                                         eq.item = item;
                                         break;
                                     }
                                 case Device.DeviceType.Radar:
                                     {
-                                        Radar item = user.mainData.itemCollect.get<Radar>(item_id);
+                                        Radar item = MainData.itemCollect.get<Radar>(item_id);
                                         eq.item = item;
                                         break;
                                     }
                                 case Device.DeviceType.Shield:
                                     {
-                                        Shield item = user.mainData.itemCollect.get<Shield>(item_id);
+                                        Shield item = MainData.itemCollect.get<Shield>(item_id);
                                         eq.item = item;
                                         break;
                                     }
                                 case Device.DeviceType.Weapon:
                                     {
-                                        Weapon item = user.mainData.itemCollect.get<Weapon>(item_id);
+                                        Weapon item = MainData.itemCollect.get<Weapon>(item_id);
                                         eq.item = item;
                                         break;
                                     }
@@ -435,13 +437,13 @@ namespace RSclient
             }
             return res;
         }
-        public User getUserData(CommandReader cr, User user)
+        public static User getUserData(CommandReader cr, User user)
         {
             User res = user;
             res.id = cr.getInt();
             res.x = cr.getInt();
             res.y = cr.getInt();
-            res.domain = user.mainData.domains[cr.getInt()];
+            res.domain = MainData.domains[cr.getInt()];
             int inPlanet = cr.getInt();
             if (inPlanet == 0) { res.inPlanet = null; }
             else { res.inPlanet = user.planets[inPlanet]; }
@@ -450,7 +452,7 @@ namespace RSclient
             res.equips = getEquips(cr, user);
             return res;
         }
-        public User getAddUser(CommandReader cr, User user)
+        public static User getAddUser(CommandReader cr, User user)
         {
             User res = new User();
             res.id = cr.getInt();
@@ -459,12 +461,12 @@ namespace RSclient
             res.y = cr.getInt();
             res.targetX = cr.getInt();
             res.targetY = cr.getInt();
-            res.domain = user.mainData.domains[cr.getInt()];
+            res.domain = MainData.domains[cr.getInt()];
             res.equips = getEquips(cr, user);
             res.updateUserShip();
             return res;
         }
-        public int getRemoveUser(CommandReader cr)
+        public static int getRemoveUser(CommandReader cr)
         {
             int res = cr.getInt();
             return res;

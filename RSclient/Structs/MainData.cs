@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace RSclient
 {
-    public class MainData
+    public static class MainData
     {
         public delegate void MainDataEventHandler(object sender, EventArgs e);
-        public Dictionary<int, Domain> domains = new Dictionary<int,Domain>();
-        public Dictionary<int, Nebula> nebulas = new Dictionary<int,Nebula>();
-        public ItemCollection itemCollect = new ItemCollection();
-        private bool _isDomains = false;
-        private bool _isNebulas = false;
-        private bool _isItems = false;
-        public bool loadingDomains = false;
-        public bool loadingNebulas = false;
-        public bool loadingItems = false;
-        public bool isLoaded = false;
+        public static Dictionary<int, Domain> domains = new Dictionary<int, Domain>();
+        public static Dictionary<int, Nebula> nebulas = new Dictionary<int, Nebula>();
+        public static ItemCollection itemCollect = new ItemCollection();
+        private static bool _isDomains = false;
+        private static bool _isNebulas = false;
+        private static bool _isItems = false;
+        public static bool loadingDomains = false;
+        public static bool loadingNebulas = false;
+        public static bool loadingItems = false;
+        public static bool isLoaded = false;
 
-        public bool isDomains
+        public static bool isDomains
         {
             get
             {
@@ -39,7 +39,7 @@ namespace RSclient
             }
         }
 
-        public bool isNebulas
+        public static bool isNebulas
         {
             get
             {
@@ -57,7 +57,7 @@ namespace RSclient
                 }
             }
         }
-        public bool isItems
+        public static bool isItems
         {
             get
             {
@@ -75,23 +75,23 @@ namespace RSclient
                 }
             }
         }
-        public event MainDataEventHandler isDomainsLoad;
-        public event MainDataEventHandler isItemsLoad;
-        public event MainDataEventHandler isNebulasLoad;
-        protected virtual void OnIsDomainsLoadEvent()
+        public static event MainDataEventHandler isDomainsLoad;
+        public static event MainDataEventHandler isItemsLoad;
+        public static event MainDataEventHandler isNebulasLoad;
+        public static void OnIsDomainsLoadEvent()
         {
             if (isDomainsLoad != null)
-                isDomainsLoad(this, EventArgs.Empty);
+                isDomainsLoad(null, EventArgs.Empty);
         }
-        protected virtual void OnIsItemsLoadEvent()
+        public static void OnIsItemsLoadEvent()
         {
             if (isItemsLoad != null)
-                isItemsLoad(this, EventArgs.Empty);
+                isItemsLoad(null, EventArgs.Empty);
         }
-        protected virtual void OnIsNebulasLoadEvent()
+        public static void OnIsNebulasLoadEvent()
         {
             if (isNebulasLoad != null)
-                isNebulasLoad(this, EventArgs.Empty);
+                isNebulasLoad(null, EventArgs.Empty);
         }
     }
 }

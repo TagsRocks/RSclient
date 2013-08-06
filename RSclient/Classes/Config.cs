@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace RSclient
 {
-    public class Config
+    public static class Config
     {
-        public int closeRadius = 3000;
-        public int protocolVersion = 9;
-        public double GlobalCoolDown = 1.0;
+        public static int closeRadius = 3000;
+        public static int protocolVersion = 9;
+        public static double GlobalCoolDown = 1.0;
 #if !DEBUG
-        public IPAddress ipAddr = new IPAddress(new byte[] { 192, 168, 0, 105 });
-        public int portListener = 7777;
-        public string projectName = "Rania Star server";
+        public static IPAddress ipAddr = new IPAddress(new byte[] { 192, 168, 0, 105 });
+        public static int portListener = 7777;
+        public static string projectName = "Rania Star server";
 #endif
 #if DEBUG
-        public IPAddress ipAddr = new IPAddress(new byte[] { 127, 0, 0, 1 });
-        public int portListener = 7776;
-        public string projectName = "Rania Star server DEBUG";
+        public static IPAddress ipAddr = new IPAddress(new byte[] { 127, 0, 0, 1 });
+        public static int portListener = 7776;
+        public static string projectName = "Rania Star server DEBUG";
 #endif
     }
 }

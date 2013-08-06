@@ -15,5 +15,6 @@ namespace RSclient
         public int targetY;
         public double startMove;
         public double flyTime;
+        public int fuel;
     }
 }

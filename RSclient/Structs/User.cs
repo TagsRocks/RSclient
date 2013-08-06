@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace RSclient
 {
@@ -61,7 +62,6 @@ namespace RSclient
         public Dictionary<int, User> usersClose = new Dictionary<int, User>();
         public Dictionary<int, Location> locations = new Dictionary<int, Location>();
         public Dictionary<int, Planet> planets = new Dictionary<int, Planet>();
-        public MainData mainData = null;
         public TargetType targetType;
         public int target;
         public UserShip userShip = new UserShip();
@@ -69,6 +69,8 @@ namespace RSclient
         public int serverTime = 0;
         public ErrorList error;
         public AI ai = new AI();
+        public Timer timer = new Timer(100);
+        public MoveUser moveUser = new MoveUser();
         
         #region ObservableObjects
         public bool isPassword
