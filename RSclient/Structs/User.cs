@@ -224,13 +224,6 @@ namespace RSclient
             this.userShip.droids = new List<Equip>();
             for (int i = 0; i < this.equips.Count; i++)
             {
-                Consumable cons = this.equips.ElementAt(i).Value.item as Consumable;
-                if ((cons != null) && (cons.id == (int)Consumable.Type.FuelID))
-                {
-                    this.userShip.fuel = this.equips.ElementAt(i).Value;
-                    this.userShip.fuel.num = this.equips.ElementAt(i).Value.num;
-                    continue;
-                }
                 if (this.equips.ElementAt(i).Value.in_use)
                 {
                     Body body = this.equips.ElementAt(i).Value.item as Body;

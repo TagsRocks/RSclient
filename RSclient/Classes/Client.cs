@@ -8,7 +8,7 @@ namespace RSclient
 {
     public class Client
     {
-        public int protocolVersion = 10;
+        public int protocolVersion = 12;
 
         public Command waitCommand(Socket handler)
         {

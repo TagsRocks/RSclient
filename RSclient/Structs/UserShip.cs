@@ -17,9 +17,9 @@ namespace RSclient
         public List<Equip> weapons = new List<Equip>();
         public List<Equip> droids = new List<Equip>();
 
-        public Equip fuel;
+        public double energy;
         public int maxFuel;
-        public float maxSpeed;
+        public double maxSpeed;
 
         #region Damage
         public void bodyDamage(int dmg)
@@ -155,26 +155,26 @@ namespace RSclient
         #endregion
 
         #region Filling
-        public void unFill(int f)
+        public void unFill(double f)
         {
-            this.fuel.num -= f;
-            if (this.fuel.num < 0)
+            this.energy -= f;
+            if (this.energy <= 0)
             {
-                this.fuel.num = 0;
-                this.maxSpeed = 0;
+                this.energy = 0;
+                this.maxSpeed = 0.5;
             }
-            if (this.fuel.num > maxFuel)
+            if (this.energy > maxFuel)
             {
-                this.fuel.num = this.maxFuel;
+                this.energy = this.maxFuel;
             }
         }
         public void reFill(int f)
         {
             Engine eng = this.engine.item as Engine;
-            this.fuel.num += f;
-            if (this.fuel.num > maxFuel)
+            this.energy += f;
+            if (this.energy > maxFuel)
             {
-                this.fuel.num = this.maxFuel;
+                this.energy = this.maxFuel;
             }
             this.maxSpeed = eng.power;
         }

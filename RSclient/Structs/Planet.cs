@@ -22,5 +22,6 @@ namespace RSclient
         public int atmosphere_speedX;
         public int atmosphere_speedY;
         public int price_coef;
+        public List<int> services = new List<int>();
     }
 }
