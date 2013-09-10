@@ -55,7 +55,7 @@ namespace RSclient
         public int targetX;
         public int targetY;
         public Client client = new Client();
-        public Domain domain = new Domain();
+        public int domain;
         public Planet inPlanet = new Planet();
         public Dictionary<int, Equip> equips = new Dictionary<int, Equip>();
         public int protocolVersion;
@@ -69,7 +69,6 @@ namespace RSclient
         public int serverTime = 0;
         public ErrorList error;
         public AI ai = new AI();
-        public Timer timer = new Timer(100);
         public MoveUser moveUser = new MoveUser();
         
         #region ObservableObjects

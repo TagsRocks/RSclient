@@ -44,6 +44,10 @@ namespace RSclient
         {
             user.client.sendCommand(new Command(Command.CList.loadComplite), user.handler);
             user.updateUserShip();
+            lock (MainData.users)
+            {
+                MainData.users.Add(user.id, user);
+            }
         }
 
         private void mainData_isItemsLoad(object sender, EventArgs e)

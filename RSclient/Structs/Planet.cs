@@ -18,7 +18,7 @@ namespace RSclient
         public int radius;
         public int color;
         public int atmosphere;
-        public Domain domain;
+        public int domain;
         public int atmosphere_speedX;
         public int atmosphere_speedY;
         public int price_coef;

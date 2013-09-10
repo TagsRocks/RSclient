@@ -11,6 +11,7 @@ namespace RSclient
         public delegate void MainDataEventHandler(object sender, EventArgs e);
         public static Dictionary<int, Domain> domains = new Dictionary<int, Domain>();
         public static Dictionary<int, Nebula> nebulas = new Dictionary<int, Nebula>();
+        public static Dictionary<int, User> users = new Dictionary<int, User>();
         public static ItemCollection itemCollect = new ItemCollection();
         private static bool _isDomains = false;
         private static bool _isNebulas = false;

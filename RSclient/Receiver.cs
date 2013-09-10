@@ -19,9 +19,6 @@ namespace RSclient
                 ReceiverParams p = (ReceiverParams)param;
                 user = p.user;
             }
-            
-            user.timer.AutoReset = true;
-            user.timer.Elapsed += (sender, e) => approxCoordUser(sender, e, user);
             if (user != null)
             {
                 while (isWork)
@@ -88,14 +85,11 @@ namespace RSclient
                             }
                         case Command.CList.touchUser:
                             {
-                                user.timer.Stop();
-                                user.moveUser = Loader.getTouchUser(cmdReader, user);
-                                if (user.moveUser != null)
+                                MoveUser moveUser = Loader.getTouchUser(cmdReader, user);
+                                if (moveUser.userId == user.id)
                                 {
-                                    if (user.usersClose.ContainsKey(user.moveUser.userId))
-                                    {
-                                        user.timer.Start();
-                                    }
+                                    user.moveUser = moveUser;
+                                    user.moveUser.mStatus = MoveUser.MoveStatus.move;
                                 }
                                 break;
                             }
@@ -117,6 +111,13 @@ namespace RSclient
                         case Command.CList.addUser:
                             {
                                 User userAdd = Loader.getAddUser(cmdReader, user);
+                                if (!MainData.users.ContainsKey(userAdd.id))
+                                {
+                                    lock (MainData.users)
+                                    {
+                                        MainData.users.Add(userAdd.id, userAdd);
+                                    }
+                                }
                                 user.usersClose.Add(userAdd.id, userAdd);
                                 Action action = user.ai.newObject;
                                 action.BeginInvoke(null, null);
@@ -143,38 +144,6 @@ namespace RSclient
                             }
                     }
                 }
-            }
-        }
-
-        public void approxCoordUser(object sender, EventArgs e, User user)
-        {
-            User usr = user.usersClose[user.moveUser.userId];
-            double unic_epox = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
-            double speed = usr.userShip.maxSpeed;
-            int startX = user.moveUser.x;
-            int startY = user.moveUser.y;
-            int endX = user.moveUser.targetX;
-            int endY = user.moveUser.targetY;
-            double flyLength = Math.Sqrt(Math.Pow(endX - startX, 2) + Math.Pow(endY - startY, 2));
-            double timeLenght = flyLength / speed;
-            double dX = endX - startX;
-            double dY = endY - startY;
-            double dT = user.moveUser.startMove + timeLenght;
-            double timeLeft = unic_epox - user.moveUser.startMove;
-            if (timeLeft > dT)
-            {
-                usr.x = user.moveUser.targetX;
-                usr.y = user.moveUser.targetY;
-                Timer timer = (Timer)sender;
-                timer.Stop();
-                timer.Dispose();
-            }
-            else
-            {
-                double ddX = dX * (timeLeft / dT);
-                double ddY = dY * (timeLeft / dT);
-                usr.x = user.moveUser.x + (int)ddX;
-                usr.y = user.moveUser.y + (int)ddY;
             }
         }
     }

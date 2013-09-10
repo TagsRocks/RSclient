@@ -63,18 +63,10 @@ namespace RSclient
             int userId = cr.getInt();
             int userTX = cr.getInt();
             int userTY = cr.getInt();
-            double flyTime = cr.getDbl();
+            double flyTime = cr.getInt();
             double energy = cr.getInt();
             double unic_epox = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
-            User usr = null;
-            if (user.usersClose.ContainsKey(userId))
-            {
-                usr = user.usersClose[userId];
-            }
-            if (user.id == userId)
-            {
-                usr = user;
-            }
+            User usr = MainData.users[userId];
             if (usr != null)
             {
                 res = new MoveUser();
@@ -85,7 +77,8 @@ namespace RSclient
                 res.targetY = userTY;
                 res.startMove = unic_epox;
                 res.flyTime = flyTime;
-                res.energy = energy;
+                res.startEnergy = energy;
+                res.fuel = flyTime*0.001;
             }
             return res;
         }
@@ -123,7 +116,7 @@ namespace RSclient
                 pln.radius = cr.getInt();
                 pln.color = cr.getInt();
                 pln.atmosphere = cr.getInt();
-                pln.domain = MainData.domains[cr.getInt()];
+                pln.domain = cr.getInt();
                 pln.atmosphere_speedX = cr.getInt();
                 pln.atmosphere_speedY = cr.getInt();
                 pln.price_coef = cr.getInt();
@@ -449,7 +442,7 @@ namespace RSclient
             res.id = cr.getInt();
             res.x = cr.getInt();
             res.y = cr.getInt();
-            res.domain = MainData.domains[cr.getInt()];
+            res.domain = cr.getInt();
             int inPlanet = cr.getInt();
             if (inPlanet == 0) { res.inPlanet = null; }
             else { res.inPlanet = user.planets[inPlanet]; }
@@ -466,7 +459,7 @@ namespace RSclient
             res.shipName = cr.getStr();
             res.x = cr.getInt();
             res.y = cr.getInt();
-            res.domain = MainData.domains[cr.getInt()];
+            res.domain = cr.getInt();
             res.userShip.energy = cr.getDbl();
             res.equips = getEquips(cr, user);
             res.updateUserShip();
