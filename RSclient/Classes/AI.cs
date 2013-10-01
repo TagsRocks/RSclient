@@ -12,6 +12,14 @@ namespace RSclient
         {
             none = 0
         }
+        private enum MainTerget : int
+        {
+            none = 0
+        }
+        private enum SubTarget : int
+        {
+            none = 0
+        }
 
         public void start()
         {
