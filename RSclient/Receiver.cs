@@ -118,7 +118,7 @@ namespace RSclient
                                         MainData.users.Add(userAdd.id, userAdd);
                                     }
                                 }
-                                user.usersClose.Add(userAdd.id, userAdd);
+                                //user.usersClose.Add(userAdd.id, userAdd);
                                 Action action = user.ai.newObject;
                                 action.BeginInvoke(null, null);
                                 break;

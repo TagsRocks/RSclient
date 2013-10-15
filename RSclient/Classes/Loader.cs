@@ -461,6 +461,7 @@ namespace RSclient
             res.y = cr.getInt();
             res.domain = cr.getInt();
             res.userShip.energy = cr.getDbl();
+            double angle = cr.getDbl();
             res.equips = getEquips(cr, user);
             res.updateUserShip();
             return res;
